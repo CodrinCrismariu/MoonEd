@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'react-native-axios';
 import { ScrollView, 
         StyleSheet, 
         Text, 
@@ -15,6 +16,20 @@ export default Register = (props) => {
     const [pass, setPass] = useState('');
     const [key, setKey] = useState('');
 
+    const register = () => {
+        axios.post('http://192.168.1.189:3000/register', {
+            mail: mail,
+            pass: pass,
+            id: key,
+        })
+        .then((res) => {
+            console.log(res.data);
+        })
+        .catch((err) => {
+            console.error(err);
+        })
+    };
+
     return (
         <ScrollView>
 
@@ -25,6 +40,7 @@ export default Register = (props) => {
                        keyboardType="default"
                        onChangeText={setMail}/>
             <TextInput style={styles.textinput}
+                       secureTextEntry={true}
                        placeholderTextColor={'#757575'} 
                        placeholder="••••••••••••"
                        keyboardType="default"
@@ -41,7 +57,7 @@ export default Register = (props) => {
                        keyboardType="default"
                        onChangeText={setKey}/>
 
-            <TouchableOpacity style={styles.button2}>
+            <TouchableOpacity style={styles.button2} onPress={register}>
                 <Text style={styles.text2}> 
                     Continuă
                 </Text>
