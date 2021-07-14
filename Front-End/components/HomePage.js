@@ -1,5 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
+import { StyleSheet, 
+        Text,
+        View, 
+        Dimensions, 
+        TouchableOpacity } from 'react-native';
 import Canvas from 'react-native-canvas';
 import { Redirect } from 'react-router-native'
 
@@ -34,19 +38,26 @@ export default HomePage = (props) => {
     if(props.page == '')
         return (
             <View style={styles.container}>
+
                 <TouchableOpacity style={styles.button1} onPress={() => props.setPage('login')}>
-                    <Text style={styles.text1}> Autentificare </Text>
+                    <Text style={styles.text1}> 
+                        Autentificare 
+                    </Text>
                 </TouchableOpacity>
+
                 <TouchableOpacity style={styles.button2} onPress={() => props.setPage('register')}>
-                    <Text style={styles.text2}> Înregistrare </Text>
+                    <Text style={styles.text2}> 
+                        Creează cont
+                    </Text>
                 </TouchableOpacity>
-                <Canvas style={styles.canvas} ref={handleCanvas}/>
+
+                <Canvas style={styles.canvas} 
+                        ref={handleCanvas}/>
+
             </View>
         );
     else
-        return (
-            <Redirect to={'/' + props.page}/>
-        )
+        return <Redirect to={'/' + props.page}/>;
 };
 
 
