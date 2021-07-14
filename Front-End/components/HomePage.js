@@ -1,17 +1,21 @@
-import React from "react";
-import { StyleSheet, Text, View, Dimensions,TouchableOpacity } from "react-native";
-import Canvas from "react-native-canvas";
+import React from 'react';
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
+import Canvas from 'react-native-canvas';
+import { Redirect } from 'react-router-native'
 
 export default HomePage = (props) => {
 
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
 
+    let k = 0;
     let handleCanvas = (canvas) => {
+        if(k++)
+            return;
         canvas.width = windowWidth;
         canvas.height = windowHeight;
 
-        const ctx = canvas.getContext("2d");
+        const ctx = canvas.getContext('2d');
         ctx.lineWidth = windowWidth / 1.3;
         ctx.strokeStyle = "#BABABA";
         animate(ctx);
@@ -27,17 +31,22 @@ export default HomePage = (props) => {
             requestAnimationFrame(() => animate(ctx));
     }
 
-    return (
-        <View style={styles.container}>
-            <TouchableOpacity style={styles.button1}>
-                <Text style={styles.text1}> Autentificare </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button2}>
-                <Text style={styles.text2}> Înregistrare </Text>
-            </TouchableOpacity>
-            <Canvas style={styles.canvas} ref={handleCanvas}/>
-        </View>
-    );
+    if(props.page == '')
+        return (
+            <View style={styles.container}>
+                <TouchableOpacity style={styles.button1} onPress={() => props.setPage('login')}>
+                    <Text style={styles.text1}> Autentificare </Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button2} onPress={() => props.setPage('register')}>
+                    <Text style={styles.text2}> Înregistrare </Text>
+                </TouchableOpacity>
+                <Canvas style={styles.canvas} ref={handleCanvas}/>
+            </View>
+        );
+    else
+        return (
+            <Redirect to={'/' + props.page}/>
+        )
 };
 
 
