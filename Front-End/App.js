@@ -1,23 +1,17 @@
+import React, { useState } from 'react';
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import { NativeRouter, Route, Link } from 'react-router-native';
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Canvas from 'react-native-canvas'
+import HomePage from './components/HomePage'
 
-export default function App() {
-
-  let handleCanvas = (canvas) => {
-    const ctx = canvas.getContext('2d');
-    ctx.fillStyle = '#BABABA';
-    ctx.fillRect(0, 0, 100, 100);
-  }
-
+export default App = () => {
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <Canvas ref={handleCanvas}>
-        <Text style={styles.text}>Open up App.js to start working on your app!</Text>
-      </Canvas>
-    </View>
+    <NativeRouter>
+      <View style={styles.container}>
+        <StatusBar style="light" />
+        <Route exact path='/' component={HomePage} />
+      </View>
+    </NativeRouter>
   );
 }
 
@@ -26,7 +20,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#272727',
   },
-  text: {
-    color: '#fff',
-  }
+  test: {
+    top: 100,
+  },
 });
