@@ -11,18 +11,14 @@ import { ScrollView,
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-export default Register = (props) => {
+export default ForgotPass = (props) => {
 
     const [res, setRes] = useState('');
     const [mail, setMail] = useState('');
-    const [pass, setPass] = useState('');
-    const [key, setKey] = useState('');
 
-    const register = () => {
-        axios.post('http://192.168.1.189:3000/register', {
+    const sendMail = () => {
+        axios.post('http://192.168.1.189:3000/forgotPass', {
             mail: mail,
-            pass: pass,
-            id: key,
         })
         .then((res) => {
             setRes(res.data);
@@ -32,32 +28,16 @@ export default Register = (props) => {
         })
     };
 
+
     return (
         <ScrollView>
 
-            <Text style={styles.text}> Creează cont </Text>
+            <Text style={styles.text}> Am uitat parola </Text>
             <TextInput style={styles.textinput}
                        placeholderTextColor={'#757575'} 
                        placeholder="exemplu@gmail.com"
                        keyboardType="default"
                        onChangeText={setMail}/>
-            <TextInput style={styles.textinput}
-                       secureTextEntry={true}
-                       placeholderTextColor={'#757575'} 
-                       placeholder="••••••••••••"
-                       keyboardType="default"
-                       onChangeText={setPass}/>
-
-            <Text style={[styles.text, {
-                  marginTop:(windowWidth * 0.1), 
-                  width:windowWidth * 0.9}]}>
-                Cheie de înregistrare
-            </Text>
-            <TextInput style={styles.textinput}
-                       placeholderTextColor={'#757575'} 
-                       placeholder="A1G7DBF7"
-                       keyboardType="default"
-                       onChangeText={setKey}/>
 
             {res != '' ? 
                 <View style={styles.flexContainer}>
@@ -67,7 +47,7 @@ export default Register = (props) => {
                 </View> 
                         : <></>}
 
-            <TouchableOpacity style={styles.button2} onPress={register}>
+            <TouchableOpacity style={styles.button2} onPress={sendMail}>
                 <Text style={styles.text2}> 
                     Continuă
                 </Text>
@@ -98,7 +78,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginLeft: (windowWidth / 100 * 5),
-        marginTop: (windowWidth / 100 * 10),
+        marginTop: (windowWidth / 100 * 7.5),
         width: (windowWidth / 100 * 90),
         height: (windowWidth / 100 * 18),
     },

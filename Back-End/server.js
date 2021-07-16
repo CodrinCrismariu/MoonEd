@@ -10,5 +10,15 @@ app.listen(port, () => {
 
 app.post('/register', (req, res) => {
     console.log(req.body);
-    res.send('testing response');
+    res.send('register response');
+});
+
+app.post('/login', (req, res) => {
+    console.log(req.body);
+    res.send('login response');
+});
+
+app.post('/forgotPass', (req, res) => {
+    console.log(req.body);
+    res.send('forgot pass response');
 });

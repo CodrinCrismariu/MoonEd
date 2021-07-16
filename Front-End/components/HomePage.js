@@ -35,29 +35,26 @@ export default HomePage = (props) => {
             requestAnimationFrame(() => animate(ctx));
     }
 
-    if(props.page == '')
-        return (
-            <View style={styles.container}>
+    return (
+        <View style={styles.container}>
 
-                <TouchableOpacity style={styles.button1} onPress={() => props.setPage('login')}>
-                    <Text style={styles.text1}> 
-                        Autentificare 
-                    </Text>
-                </TouchableOpacity>
+            <TouchableOpacity style={styles.button1} onPress={() => props.setPage('login')}>
+                <Text style={styles.text1}> 
+                    Autentificare 
+                </Text>
+            </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button2} onPress={() => props.setPage('register')}>
-                    <Text style={styles.text2}> 
-                        Creează cont
-                    </Text>
-                </TouchableOpacity>
+            <TouchableOpacity style={styles.button2} onPress={() => props.setPage('register')}>
+                <Text style={styles.text2}> 
+                    Creează cont
+                </Text>
+            </TouchableOpacity>
 
-                <Canvas style={styles.canvas} 
-                        ref={handleCanvas}/>
+            <Canvas style={styles.canvas} 
+                    ref={handleCanvas}/>
 
-            </View>
-        );
-    else
-        return <Redirect to={'/' + props.page}/>;
+        </View>
+    );
 };
 
 
