@@ -1,23 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, 
         View,
         Dimensions,
-        Text } from 'react-native';
+        Text,
+        TouchableOpacity } from 'react-native';
+        
 import OptionsIcon from '../imgs/OptionsIcon';
 import HumanIcon from '../imgs/HumanIcon';
+import XIcon from '../imgs/XIcon';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 export default NavBar = (props) => {
+
+    const [open, setOpen] = useState(0);
+
     return (
-        <View style={styles.container}>
-            <OptionsIcon style={styles.img} width={ windowWidth / 100 * 12.5 }/>
-            <View style={styles.textContainer}>
-                <Text style={styles.text}>
-                    {props.text}
-                </Text>
+        <View>
+            <View style={styles.container}>
+                <OptionsIcon style={styles.img} width={ windowWidth / 100 * 12.5 } onPress={() => setOpen(!open)}/>
+
+                <View style={styles.textContainer}>
+                    <Text style={styles.text}>
+                        {props.text}
+                    </Text>
+                </View>
+
+                <HumanIcon style={[styles.img]} width={ windowWidth / 100 * 10 }/>
             </View>
-            <HumanIcon style={[styles.img]} width={ windowWidth / 100 * 10 }/>
+            { open == 1 ? <SlideWindow open={open} setOpen={setOpen}/> : <></> }
+        </View>
+    )
+}
+
+const SlideWindow = ({ open, setOpen }) => {
+    return (
+        <View style={styles.window}>
+            <XIcon 
+                height={windowWidth / 100 * 12.5} 
+                width={windowWidth / 100 * 12.5}
+                style={{
+                    left: windowWidth / 100 * 5,
+                    top: windowWidth / 100 * 12.5
+                }}
+                onPress={() => setOpen(!open)}
+            />
         </View>
     )
 }
@@ -53,6 +80,21 @@ const styles = StyleSheet.create({
         left: windowWidth / 100 * 5,
         width: windowWidth / 100 * 67.5,
         alignItems: 'center',
+    },
+    window: {
+        position: 'absolute',
+        backgroundColor: '#272727',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 7,
+            height: 7,
+        },
+        shadowOpacity: 0.7,
+        shadowRadius: 9.51,
+        width: windowWidth / 100 * 60,
+        height: windowHeight,
+        elevation: 16,
+        zIndex: 16,
     },
 });
 
