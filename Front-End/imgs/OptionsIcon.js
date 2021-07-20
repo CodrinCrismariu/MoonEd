@@ -4,8 +4,8 @@ import Svg, { Path } from 'react-native-svg'
 export default OptionsIcon = (props) => {
     return (
         <Svg
-            width={100}
-            height={100}
+            width={1000}
+            height={1000}
             viewBox='0 0 25 20'
             fill='none'
             xmlns='http://www.w3.org/2000/svg'
