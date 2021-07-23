@@ -8,6 +8,9 @@ import { StyleSheet,
 import OptionsIcon from '../imgs/OptionsIcon';
 import HumanIcon from '../imgs/HumanIcon';
 import XIcon from '../imgs/XIcon';
+import EvolutionIcon from '../imgs/EvolutionIcon';
+import GradeIcon from '../imgs/GradeIcon';
+import MessageIcon from '../imgs/MessageIcon'
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -16,9 +19,11 @@ export default NavBar = (props) => {
     const [open, setOpen] = useState(0);
 
     return (
-        <View>
+        <View style={{ position: 'absolute' }}>
             <View style={styles.container}>
-                <OptionsIcon style={styles.img} width={ windowWidth / 100 * 12.5 } onPress={() => setOpen(!open)}/>
+                <OptionsIcon style={styles.img} 
+                             width={ windowWidth / 100 * 12.5 } 
+                             onPress={() => setOpen(!open)}/>
 
                 <View style={styles.textContainer}>
                     <Text style={styles.text}>
@@ -26,25 +31,94 @@ export default NavBar = (props) => {
                     </Text>
                 </View>
 
-                <HumanIcon style={[styles.img]} width={ windowWidth / 100 * 10 }/>
+                <HumanIcon style={[styles.img]} 
+                           width={ windowWidth / 100 * 10 }/>
             </View>
-            { open == 1 ? <SlideWindow open={open} setOpen={setOpen}/> : <></> }
+            { open == 1 ? 
+                    <SlideWindow open={ open } 
+                                 setOpen={ setOpen } 
+                                 setPage={ props.setPage }/> 
+                    : <></> }
         </View>
     )
 }
 
-const SlideWindow = ({ open, setOpen }) => {
+const SlideWindow = ({ open, setOpen, setPage }) => {
+    const [test, setTest] = useState(0);
+
     return (
         <View style={styles.window}>
             <XIcon 
                 height={windowWidth / 100 * 12.5} 
                 width={windowWidth / 100 * 12.5}
                 style={{
-                    left: windowWidth / 100 * 5,
-                    top: windowWidth / 100 * 12.5
+                    marginLeft: windowWidth / 100 * 5,
+                    marginTop: windowWidth / 100 * 8.75 + 10,
                 }}
                 onPress={() => setOpen(!open)}
             />
+
+            {/* Student Buttons */}
+            <TouchableOpacity style={{ marginTop: windowWidth / 100 * 10, }} 
+                              onPress={() => { setPage('/evolution') }}>
+                <View style={{ height: windowWidth / 100 * 20 }}>
+                    <View style={{ flex: 1, 
+                                   flexDirection: 'row', 
+                                   alignItems: 'center' }}>
+                        <EvolutionIcon width={ windowWidth / 100 * 12.5 } 
+                                       height={ windowWidth / 100 * 20 }
+                                       marginLeft={ windowWidth / 100 * 7 }/>
+                        <Text style={{ fontSize: windowWidth / 100 * 7,
+                                       color: '#BABABA',
+                                       fontFamily: 'Roboto',
+                                       fontWeight: 'bold',
+                                       marginLeft: windowWidth / 100 * 5, }}>
+                            Evoluție
+                        </Text>
+                    </View>
+                </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={{ marginTop: windowWidth / 100 * 2, }} 
+                              onPress={() => { setPage('/grades') }}>
+                <View style={{ height: windowWidth / 100 * 20 }}>
+                    <View style={{ flex: 1, 
+                                   flexDirection: 'row', 
+                                   alignItems: 'center' }}>
+                        <GradeIcon width={ windowWidth / 100 * 12.5 } 
+                                   height={ windowWidth / 100 * 20 }
+                                   marginLeft={ windowWidth / 100 * 7 }/>
+                        <Text style={{ fontSize: windowWidth / 100 * 7,
+                                       color: '#BABABA',
+                                       fontFamily: 'Roboto',
+                                       fontWeight: 'bold',
+                                       marginLeft: windowWidth / 100 * 5, }}>
+                            Note
+                        </Text>
+                    </View>
+                </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={{ marginTop: windowWidth / 100 * 2, }} 
+                              onPress={() => { setPage('/messages') }}>
+                <View style={{ height: windowWidth / 100 * 20 }}>
+                    <View style={{ flex: 1, 
+                                   flexDirection: 'row', 
+                                   alignItems: 'center' }}>
+                        <MessageIcon width={ windowWidth / 100 * 12.5 } 
+                                     height={ windowWidth / 100 * 20 }
+                                     marginLeft={ windowWidth / 100 * 7 }/>
+                        <Text style={{ fontSize: windowWidth / 100 * 7,
+                                       color: '#BABABA',
+                                       fontFamily: 'Roboto',
+                                       fontWeight: 'bold',
+                                       marginLeft: windowWidth / 100 * 5, }}>
+                            Mesaje
+                        </Text>
+                    </View>
+                </View>
+            </TouchableOpacity>
+
         </View>
     )
 }
@@ -62,7 +136,6 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.7,
         shadowRadius: 9.51,
-        elevation: 15,
         alignItems: 'center',
     },
     img: {
@@ -93,8 +166,6 @@ const styles = StyleSheet.create({
         shadowRadius: 9.51,
         width: windowWidth / 100 * 60,
         height: windowHeight,
-        elevation: 16,
-        zIndex: 16,
     },
 });
 

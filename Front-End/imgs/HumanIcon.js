@@ -1,5 +1,5 @@
 import React from 'react'
-import Svg, { Mask, Path, G, Circle } from 'react-native-svg'
+import Svg, { Path, Circle } from 'react-native-svg'
 
 export default HumanIcon = (props) => {
   return (

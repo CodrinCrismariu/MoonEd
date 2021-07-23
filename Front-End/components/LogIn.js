@@ -8,7 +8,6 @@ import { ScrollView,
         TextInput, 
         TouchableOpacity } from 'react-native';
 
-
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 export default Login = (props) => {
@@ -23,7 +22,9 @@ export default Login = (props) => {
             pass: pass,
         })
         .then((res) => {
-            setRes(res.data);
+            if(res.data == 'succes') {
+                props.setPage('news');
+            }
         })
         .catch((err) => {
             console.error(err);

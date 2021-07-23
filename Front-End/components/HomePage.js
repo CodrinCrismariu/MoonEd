@@ -5,7 +5,6 @@ import { StyleSheet,
         Dimensions, 
         TouchableOpacity } from 'react-native';
 import Canvas from 'react-native-canvas';
-import { Redirect } from 'react-router-native'
 
 export default HomePage = (props) => {
 
