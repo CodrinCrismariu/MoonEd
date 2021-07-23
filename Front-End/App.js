@@ -13,6 +13,7 @@ import News from './components/News'
 
 export default App = () => {
 
+  const [loggedIn, setLoggedIn] = useState(0);
   const [mail, setMail] = useState('');
   const [pass, setPass] = useState('');
   const [userId, setUserId] = useState('');
@@ -32,7 +33,7 @@ export default App = () => {
   }, []);
 
   useEffect(() => {
-    if (mail != '' && pass != '') {
+    if (mail != '' && pass != '' && loggedIn == 0) {
       axios.post('http://192.168.1.189:3000/login', {
         mail: mail,
         pass: pass,
@@ -40,6 +41,7 @@ export default App = () => {
         .then((res) => {
           if (res.data == 'succes') {
             setPage('news');
+            setLoggedIn(1);
           }
         })
         .catch((err) => {

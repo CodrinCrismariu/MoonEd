@@ -2,10 +2,10 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import NavBar from './NavBar';
 
-export default News = () => {
+export default News = (props) => {
   return (
     <View>
-      <NavBar text={'Noutăți'}/>
+      <NavBar text={'Noutăți'} setPage={props.setPage} />
     </View>
   )
 }
