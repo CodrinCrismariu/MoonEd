@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Text } from 'react-native';
 import { NativeRouter, Route, Redirect } from 'react-router-native';
 import { StatusBar } from 'expo-status-bar';
 import axios from 'react-native-axios';
+import * as SecureStore from 'expo-secure-store';
 
 import HomePage from './components/HomePage'
 import LogIn from './components/LogIn'
@@ -12,21 +13,53 @@ import News from './components/News'
 
 export default App = () => {
 
+  const [mail, setMail] = useState('');
+  const [pass, setPass] = useState('');
   const [userId, setUserId] = useState('');
   const [page, setPage] = useState('');
+
+  async function getValueForMail() {
+    setMail(await SecureStore.getItemAsync('mail'));
+  }
+
+  async function getValueForPass() {
+    setPass(await SecureStore.getItemAsync('pass'));
+  }
+
+  useEffect(() => {
+    getValueForMail();
+    getValueForPass();
+  }, []);
+
+  useEffect(() => {
+    if (mail != '' && pass != '') {
+      axios.post('http://192.168.1.189:3000/login', {
+        mail: mail,
+        pass: pass,
+      })
+        .then((res) => {
+          if (res.data == 'succes') {
+            setPage('news');
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        })
+    }
+  });
 
   return (
     <NativeRouter>
 
-      <Redirect to={'/' + page}/>
+      <Redirect to={'/' + page} />
 
       <View style={styles.container}>
         <StatusBar style="light" />
-        <Route exact path='/' component={() => <HomePage setPage={setPage}/>} />
-        <Route path='/login' component={() => <LogIn setPage={setPage}/>} />
-        <Route path='/register' component={() => <Register setPage={setPage}/>} />
-        <Route path='/forgotPass' component={() => <ForgotPass setPage={setPage}/>} />
-        <Route exact path='/news' component={() => <News setPage={setPage}/>} />
+        <Route exact path='/' component={() => <HomePage setPage={setPage} />} />
+        <Route path='/login' component={() => <LogIn setPage={setPage} />} />
+        <Route path='/register' component={() => <Register setPage={setPage} />} />
+        <Route path='/forgotPass' component={() => <ForgotPass setPage={setPage} />} />
+        <Route exact path='/news' component={() => <News setPage={setPage} />} />
       </View>
 
     </NativeRouter>

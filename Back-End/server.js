@@ -15,7 +15,7 @@ app.post('/register', (req, res) => {
 
 app.post('/login', (req, res) => {
     console.log(req.body);
-    res.send('no');
+    res.send('succes');
 });
 
 app.post('/forgotPass', (req, res) => {

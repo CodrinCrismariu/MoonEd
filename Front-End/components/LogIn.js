@@ -7,6 +7,11 @@ import { ScrollView,
         Dimensions, 
         TextInput, 
         TouchableOpacity } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
+
+async function save(key, value) {
+  await SecureStore.setItemAsync(key, value);
+}
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -23,6 +28,8 @@ export default Login = (props) => {
         })
         .then((res) => {
             if(res.data == 'succes') {
+                save('mail', mail);
+                save('pass', pass);
                 props.setPage('news');
             }
         })
