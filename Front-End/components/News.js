@@ -5,7 +5,10 @@ import NavBar from './NavBar';
 export default News = (props) => {
   return (
     <View>
-      <NavBar text={'Noutăți'} setPage={props.setPage} />
+      <NavBar text={ 'Noutăți' } 
+              setPage={ props.setPage } 
+              name={ props.name }
+              setLoggedIn={ props.setLoggedIn }/>
     </View>
   )
 }

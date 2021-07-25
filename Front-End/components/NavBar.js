@@ -3,7 +3,8 @@ import { StyleSheet,
         View,
         Dimensions,
         Text,
-        TouchableOpacity } from 'react-native';
+        TouchableOpacity,
+        Button, } from 'react-native';
         
 import OptionsIcon from '../imgs/OptionsIcon';
 import HumanIcon from '../imgs/HumanIcon';
@@ -11,54 +12,69 @@ import XIcon from '../imgs/XIcon';
 import EvolutionIcon from '../imgs/EvolutionIcon';
 import GradeIcon from '../imgs/GradeIcon';
 import MessageIcon from '../imgs/MessageIcon'
+import * as SecureStore from 'expo-secure-store';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 export default NavBar = (props) => {
 
-    const [open, setOpen] = useState(0);
+    const [openMoreOptions, setMoreOptions] = useState(0);
+    const [openProfile, setProfile] = useState(0);
 
     return (
         <View style={{ position: 'absolute' }}>
-            <View style={styles.container}>
-                <OptionsIcon style={styles.img} 
+            <View style={ styles.container }>
+                <OptionsIcon style={ [styles.img, { marginLeft: windowWidth / 100 * 5 }] } 
                              width={ windowWidth / 100 * 12.5 } 
-                             onPress={() => setOpen(!open)}/>
+                             onPress={() => setMoreOptions(1)}/>
 
-                <View style={styles.textContainer}>
-                    <Text style={styles.text}>
+                <View style={ styles.textContainer }>
+                    <Text style={ styles.text }>
                         {props.text}
                     </Text>
                 </View>
 
-                <HumanIcon style={[styles.img]} 
-                           width={ windowWidth / 100 * 10 }/>
+                <HumanIcon style={ styles.img } 
+                           width={ windowWidth / 100 * 10 }
+                           onPress={() => { setProfile(1), setMoreOptions(0) }}/>
             </View>
-            { open == 1 ? 
-                    <SlideWindow open={ open } 
-                                 setOpen={ setOpen } 
+
+            { openMoreOptions == 1 ? 
+                    <SlideWindow setOpen={ setMoreOptions } 
                                  setPage={ props.setPage }/> 
                     : <></> }
+
+            { openProfile == 1 ? 
+                <ProfileWindow name={ props.name }
+                               setOpen={ setProfile }
+                               setLoggedIn={ props.setLoggedIn }
+                               setPage={ props.setPage }/>
+            : <></> }
         </View>
     )
 }
 
-const SlideWindow = ({ open, setOpen, setPage }) => {
-    const [test, setTest] = useState(0);
-
+const SlideWindow = ({ setOpen, setPage }) => {
     return (
-        <View style={styles.window}>
-            <XIcon 
-                height={windowWidth / 100 * 12.5} 
-                width={windowWidth / 100 * 12.5}
-                style={{
-                    marginLeft: windowWidth / 100 * 5,
-                    marginTop: windowWidth / 100 * 8.75 + 10,
-                }}
-                onPress={() => setOpen(!open)}
+        <View style={ styles.window }>
+            <XIcon height={ windowWidth / 100 * 12.5 } 
+                   width={ windowWidth / 100 * 12.5 }
+                   style={{
+                       marginLeft: windowWidth / 100 * 5,
+                       marginTop: windowWidth / 100 * 8.75 + 10,
+                   }}
+                   onPress={() => setOpen(0)}
             />
 
-            {/* Student Buttons */}
+            <StudentButtons setPage={ setPage }/>
+
+        </View>
+    )
+}
+
+const StudentButtons = ({ setPage }) => {
+    return (
+        <>
             <TouchableOpacity style={{ marginTop: windowWidth / 100 * 10, }} 
                               onPress={() => { setPage('/evolution') }}>
                 <View style={{ height: windowWidth / 100 * 20 }}>
@@ -118,10 +134,44 @@ const SlideWindow = ({ open, setOpen, setPage }) => {
                     </View>
                 </View>
             </TouchableOpacity>
-
-        </View>
+        </>
     )
 }
+
+const ProfileWindow = ({ setOpen, name, setLoggedIn, setPage }) => {
+    return (
+        <>
+            <View style={{ position:'absolute', 
+                        width:windowWidth, 
+                        height:windowHeight, 
+                        backgroundColor:'#272727' }}>
+                <View style={{ height: windowWidth / 100 * 30 }}>
+                    <View style={{ flex: 1, flexDirection:'row'}}>
+                        <View style={{ width:windowWidth / 100 * 83.5, justifyContent:'center', alignItems: 'center' }}>
+                            <Text style={[ styles.text ]}>
+                                { name.map((_) => _ + ' ') }
+                            </Text>
+                        </View>
+                        <XIcon height={ windowWidth / 100 * 12.5 } 
+                            width={ windowWidth / 100 * 12.5 }
+                            style={{
+                                marginTop: windowWidth / 100 * 8.75 + 10,
+                            }}
+                            onPress={() => setOpen(0)}
+                        />
+                    </View>
+                </View>
+            </View>
+
+            <Button title='Log Out'
+                    onPress={ () => { LogOut(setLoggedIn, setPage) } } />
+        </>
+    )   
+}
+
+const LogOut = ( setLoggedIn, setPage ) => {
+    SecureStore.deleteItemAsync('mail').then(SecureStore.deleteItemAsync('pass')).then(setLoggedIn(0)).then(setPage(''));
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -139,7 +189,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     img: {
-        left: windowWidth / 100 * 5,
         top: 10,
     },
     text: {
@@ -150,7 +199,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     textContainer: {
-        left: windowWidth / 100 * 5,
         width: windowWidth / 100 * 67.5,
         alignItems: 'center',
     },
