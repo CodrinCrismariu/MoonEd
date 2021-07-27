@@ -4,6 +4,7 @@ const server = require("http").createServer(app);
 const io = require("socket.io").listen(server);
 const port = 3000;
 
+app.use(express.json());
 app.post('/register', (req, res) => {
     console.log(req.body);
     res.send('register response');
