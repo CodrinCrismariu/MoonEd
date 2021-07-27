@@ -76,7 +76,7 @@ const StudentButtons = ({ setPage }) => {
     return (
         <>
             <TouchableOpacity style={{ marginTop: windowWidth / 100 * 10, }} 
-                              onPress={() => { setPage('/evolution') }}>
+                              onPress={() => { setPage('evolution') }}>
                 <View style={{ height: windowWidth / 100 * 20 }}>
                     <View style={{ flex: 1, 
                                    flexDirection: 'row', 
@@ -96,7 +96,7 @@ const StudentButtons = ({ setPage }) => {
             </TouchableOpacity>
 
             <TouchableOpacity style={{ marginTop: windowWidth / 100 * 2, }} 
-                              onPress={() => { setPage('/grades') }}>
+                              onPress={() => { setPage('grades') }}>
                 <View style={{ height: windowWidth / 100 * 20 }}>
                     <View style={{ flex: 1, 
                                    flexDirection: 'row', 
@@ -116,7 +116,7 @@ const StudentButtons = ({ setPage }) => {
             </TouchableOpacity>
 
             <TouchableOpacity style={{ marginTop: windowWidth / 100 * 2, }} 
-                              onPress={() => { setPage('/messages') }}>
+                              onPress={() => { setPage('messages') }}>
                 <View style={{ height: windowWidth / 100 * 20 }}>
                     <View style={{ flex: 1, 
                                    flexDirection: 'row', 

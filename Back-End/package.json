@@ -1,9 +1,17 @@
 {
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
   "main": "index.js",
-  "scripts": {},
-  "dependencies": {
-    "express": "^4.17.1"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "devDependencies": {},
-  "private": true
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "nodemon": "^2.0.7",
+    "socket.io": "^2.2.0"
+  }
 }

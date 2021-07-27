@@ -5,11 +5,12 @@ import { StatusBar } from 'expo-status-bar';
 import axios from 'react-native-axios';
 import * as SecureStore from 'expo-secure-store';
 
-import HomePage from './components/HomePage'
-import LogIn from './components/LogIn'
+import HomePage from './components/HomePage';
+import LogIn from './components/LogIn';
 import Register from './components/Register';
 import ForgotPass from './components/ForgotPass';
-import News from './components/News'
+import News from './components/News';
+import Messages from './components/Messages';
 
 export default App = () => {
 
@@ -65,6 +66,7 @@ export default App = () => {
         <Route exact path='/news' component={() => <News setPage={setPage} 
                                                          name={name} 
                                                          setLoggedIn={setLoggedIn} />} />
+        <Route path='/messages' component={() => <Messages setPage={setPage} />} />
       </View>
 
     </NativeRouter>
