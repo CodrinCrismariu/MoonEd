@@ -21,12 +21,26 @@ export default Login = (props) => {
     const [mail, setMail] = useState('');
     const [pass, setPass] = useState('');
 
+    const validatemail = (mail) => {
+        let re = /\S+@\S+\.\S+/;
+        return re.test(mail);
+    }
+
     const login = () => {
+        if(!validatemail(mail)) {
+            setRes('mail-ul nu este valid')
+            return;
+        }
+        if(pass.length < 7) {
+            setRes('parola nu este validă');
+            return;
+        }
         axios.post('http://192.168.1.189:3000/login', {
             mail: mail,
             pass: pass,
         })
         .then((res) => {
+            setRes(res.data);
             if(res.data == 'succes') {
                 save('mail', mail);
                 save('pass', pass);
@@ -58,21 +72,25 @@ export default Login = (props) => {
                        keyboardType="default"
                        onChangeText={setPass}/>
 
-            {res != '' ? 
-                <View style={styles.flexContainer}>
-                    <Text style={styles.response}> 
-                        {res} 
+            { res != '' ? 
+                <View style={ styles.flexContainer }>
+                    <Text style={ styles.response }> 
+                        { res } 
                     </Text>
                 </View> 
-                        : <></>}
-            <View style={styles.flexContainer}>
-                <Text style={[styles.text, {marginTop: 10, fontSize: (windowWidth / 20)}]} onPress={forgotPass}>
+                        : <></> }
+            <View style={ styles.flexContainer }>
+                <Text style={[styles.text, 
+                            { marginTop: 10, 
+                              fontSize: (windowWidth / 20) }]} 
+                              onPress={ forgotPass }>
                     Am uitat parola?
                 </Text>
             </View>
 
-            <TouchableOpacity style={styles.button2} onPress={login}>
-                <Text style={styles.text2}> 
+            <TouchableOpacity style={ styles.button2 } 
+                              onPress={ login }>
+                <Text style={ styles.text2 }> 
                     Continuă
                 </Text>
             </TouchableOpacity>

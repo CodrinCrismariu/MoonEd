@@ -35,7 +35,7 @@ export default App = () => {
   }, []);
 
   useEffect(() => {
-    if (mail && pass && loggedIn == 0) {
+    if (mail != '' && pass != '' && loggedIn == 0) {
       axios.post('http://192.168.1.189:3000/login', {
         mail: mail,
         pass: pass,

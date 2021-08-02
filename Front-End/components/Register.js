@@ -7,7 +7,12 @@ import { ScrollView,
         Dimensions, 
         TextInput, 
         TouchableOpacity } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
 
+async function save(key, value) {
+    await SecureStore.setItemAsync(key, value);
+}
+        
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -18,7 +23,20 @@ export default Register = (props) => {
     const [pass, setPass] = useState('');
     const [key, setKey] = useState('');
 
+    const validatemail = (mail) => {
+        let re = /\S+@\S+\.\S+/;
+        return re.test(mail);
+    }
+
     const register = () => {
+        if(!validatemail(mail)) {
+            setRes('mail-ul nu este valid')
+            return;
+        }
+        if(pass.length < 7) {
+            setRes('parola trebuie sa aiba cel putin 8 caractere');
+            return;
+        }
         axios.post('http://192.168.1.189:3000/register', {
             mail: mail,
             pass: pass,
@@ -26,6 +44,11 @@ export default Register = (props) => {
         })
         .then((res) => {
             setRes(res.data);
+            if(res.data == 'succes') {
+                save('mail', mail);
+                save('pass', pass);
+                props.setPage('news');
+            }
         })
         .catch((err) => {
             console.error(err);
