@@ -86,7 +86,7 @@ io.on('connection', socket => {
 
     socket.emit('get id');
     socket.on('get id', id => {
-        connectedSockets.set(id, socket);
+        connectedSockets.set(id, socket.id);
         reverseSockets.set(socket.id, id);
     })
 
@@ -96,6 +96,18 @@ io.on('connection', socket => {
     });
 
     socket.on('message', data => {
-        io.emit('message', data);
+        ChatModel.findOne({ id: data.chatId }, (err, chat) => {
+            if(!err) {
+                const users = chat.users;
+                users.forEach(user => {
+                    console.log(connectedSockets.get(user));
+                    if(connectedSockets.get(user)) {
+                        io.to(connectedSockets.get(user)).emit('message', { chatId: data.chatId, message: data.message });
+                    }
+                });
+            } else {
+                console.error(err);
+            }
+        });
     });
 });
