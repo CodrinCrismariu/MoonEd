@@ -9,3 +9,4 @@ mongoose.connect('mongodb://localhost:27017/MoonEd', { useNewUrlParser: true, us
 })
 
 const User = require('./user.model')
+const Chat = require('./chat.model')

@@ -15,33 +15,43 @@ import Messages from './components/Messages';
 export default App = () => {
 
   const [loggedIn, setLoggedIn] = useState(0);
-  const [mail, setMail] = useState('');
-  const [pass, setPass] = useState('');
-  const [userId, setUserId] = useState('');
-  const [name, setName] = useState(['Nume', 'Prenume']);
+  const [userData, setUserData] = useState({});
   const [page, setPage] = useState('');
 
   const getValueForMail = async () => {
-    setMail(await SecureStore.getItemAsync('mail'));
+    setUserData({ ...userData, mail: await SecureStore.getItemAsync('mail') });
   }
 
   const getValueForPass = async () => {
-    setPass(await SecureStore.getItemAsync('pass'));
+    setUserData({ ...userData, pass: await SecureStore.getItemAsync('pass') });
   }
 
   useEffect(() => {
     getValueForMail();
-    getValueForPass();
   }, []);
 
   useEffect(() => {
-    if (mail != '' && pass != '' && loggedIn == 0) {
+    if (userData.mail && !userData.pass && loggedIn == 0) {
+      getValueForPass();
+    }
+    if (userData.mail && userData.pass && loggedIn == 0) {
       axios.post('http://192.168.1.189:3000/login', {
-        mail: mail,
-        pass: pass,
+        mail: userData.mail,
+        pass: userData.pass,
       })
         .then((res) => {
           if (res.data == 'succes') {
+            // retrieve userData
+            axios.post('http://192.168.1.189:3000/retrieveUserData', {
+              mail: userData.mail
+            })
+            .then((res) => { 
+              setUserData({ ...userData, ...res.data });
+            })
+            .catch((err) => { 
+              console.error(err) 
+            })
+            // redirect
             setPage('news');
             setLoggedIn(1);
           }
@@ -51,22 +61,20 @@ export default App = () => {
         })
     }
   });
-
   return (
     <NativeRouter>
 
       <Redirect to={'/' + page} />
-
       <View style={styles.container}>
         <StatusBar style="light" />
         <Route exact path='/' component={() => <HomePage setPage={setPage} />} />
         <Route path='/login' component={() => <LogIn setPage={setPage} />} />
         <Route path='/register' component={() => <Register setPage={setPage} />} />
         <Route path='/forgotPass' component={() => <ForgotPass setPage={setPage} />} />
-        <Route exact path='/news' component={() => <News setPage={setPage} 
-                                                         name={name} 
-                                                         setLoggedIn={setLoggedIn} />} />
-        <Route path='/messages' component={() => <Messages setPage={setPage} />} />
+        <Route exact path='/news' component={() => <News setPage={setPage}
+          name={userData.name}
+          setLoggedIn={setLoggedIn} />} />
+        <Route path='/messages' component={() => <Messages userData={userData} setPage={setPage} />} />
       </View>
 
     </NativeRouter>

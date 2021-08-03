@@ -22,6 +22,9 @@ var UserSchema = new mongoose.Schema({
     mail: {
         type: String,
     },
+    chats: {
+        type: Array,
+    }
 });
 
 mongoose.model('User', UserSchema)
