@@ -45,11 +45,12 @@ export default NavBar = (props) => {
                     : <></> }
 
             { openProfile == 1 ? 
-                <ProfileWindow name={ props.name }
-                               setOpen={ setProfile }
-                               setLoggedIn={ props.setLoggedIn }
-                               setPage={ props.setPage }/>
-            : <></> }
+                    <ProfileWindow name={ props.userData.name }
+                                   setOpen={ setProfile }
+                                   setLoggedIn={ props.setLoggedIn }
+                                   setPage={ props.setPage }
+                                   setUserData={ props.setUserData }/>
+                    : <></> }
         </View>
     )
 }
@@ -138,7 +139,7 @@ const StudentButtons = ({ setPage }) => {
     )
 }
 
-const ProfileWindow = ({ setOpen, name, setLoggedIn, setPage }) => {
+const ProfileWindow = ({ setOpen, name, setLoggedIn, setPage, setUserData }) => {
     return (
         <>
             <View style={{ position:'absolute', 
@@ -149,7 +150,7 @@ const ProfileWindow = ({ setOpen, name, setLoggedIn, setPage }) => {
                     <View style={{ flex: 1, flexDirection:'row'}}>
                         <View style={{ width:windowWidth / 100 * 83.5, justifyContent:'center', alignItems: 'center' }}>
                             <Text style={[ styles.text ]}>
-                                { name.map((_) => _ + ' ') }
+                                { name ? name.map((_) => _ + ' ') : '' }
                             </Text>
                         </View>
                         <XIcon height={ windowWidth / 100 * 12.5 } 
@@ -164,13 +165,13 @@ const ProfileWindow = ({ setOpen, name, setLoggedIn, setPage }) => {
             </View>
 
             <Button title='Log Out'
-                    onPress={ () => { LogOut(setLoggedIn, setPage) } } />
+                    onPress={ () => { LogOut(setLoggedIn, setPage, setUserData) } } />
         </>
     )   
 }
 
-const LogOut = ( setLoggedIn, setPage ) => {
-    SecureStore.deleteItemAsync('mail').then(SecureStore.deleteItemAsync('pass')).then(setLoggedIn(0)).then(setPage(''));
+const LogOut = ( setLoggedIn, setPage, setUserData ) => {
+    SecureStore.deleteItemAsync('mail').then(SecureStore.deleteItemAsync('pass')).then(setUserData({})).then(setLoggedIn(0)).then(setPage(''));
 };
 
 const styles = StyleSheet.create({

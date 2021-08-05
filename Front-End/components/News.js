@@ -7,7 +7,8 @@ export default News = (props) => {
     <View>
       <NavBar text={ 'Noutăți' } 
               setPage={ props.setPage } 
-              name={ props.name }
+              userData={ props.userData }
+              setUserData={ props.setUserData }
               setLoggedIn={ props.setLoggedIn }/>
     </View>
   )

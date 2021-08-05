@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 var ChatSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: "Required"
-    },
     id: {
         type: String,
         required: "Required"
@@ -14,6 +10,12 @@ var ChatSchema = new mongoose.Schema({
     },
     users: {
         type: Array,
+    },
+    type: {
+        type: String,
+    },
+    imgUrl: {
+        type: String,
     }
 });
 

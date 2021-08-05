@@ -44,7 +44,7 @@ export default Login = (props) => {
             if(res.data == 'succes') {
                 save('mail', mail);
                 save('pass', pass);
-                props.setPage('news');
+                props.setUserData({ mail: mail, pass: pass });
             }
         })
         .catch((err) => {

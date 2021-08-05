@@ -74,6 +74,61 @@ app.post('/retrieveUserData', (req, res) => {
     });
 });
 
+app.post('/getChats', (req, res) => {
+    UserModel.findOne({ id: req.body.id }, (err, user) => {
+        if(!err) {
+            if(user) {
+                let checkedChats = 0;
+                let chatObjects = [];
+                user.chats.forEach(chatId => {
+                    ChatModel.findOne({ id: chatId }, (err, chat) => {
+                        if(!err) {
+                            if(chat) {
+                                if(chat.type = 'private') {
+                                    chat.users.forEach(newUser => {
+                                        if(newUser != user.id) {
+                                            UserModel.findOne({ id: newUser }, (err, user) => {
+                                                checkedChats++;
+                                                chatObjects.push({ name: user.name.split(' '), messages: chat.messages, img: chat.imgUrl, id: chat.id });
+                                                if(checkedChats == user.chats.length) {
+                                                    res.send(chatObjects);
+                                                }
+                                            })
+                                        }
+                                    })
+                                } else {
+                                    // group chats
+                                    checkedChats++;
+                                    chatObjects.push({ name: chat.type, messages: chat.messages, img: chat.imgUrl, id: chat.id });
+                                    if(checkedChats == user.chats.length) {
+                                        res.send(chatObjects);
+                                    }
+                                }
+                            } else {
+                                checkedChats++;
+                                console.error("can't find chat with id", chat.id);
+                                if(checkedChats == user.chats.length) {
+                                    res.send(chatObjects);
+                                }
+                            }
+                        } else {
+                            checkedChats++;
+                            console.error(err);
+                            if(checkedChats == user.chats.length) {
+                                res.send(chatObjects);
+                            }
+                        }
+                    });
+                })
+            } else {
+                console.error("can't find user with id", req.body.id);
+            }
+        } else {
+            console.error(err);
+        }
+    });
+});
+
 app.post('/forgotPass', (req, res) => {
     console.log(req.body);
     res.send('forgot pass response');
@@ -100,7 +155,6 @@ io.on('connection', socket => {
             if(!err) {
                 const users = chat.users;
                 users.forEach(user => {
-                    console.log(connectedSockets.get(user));
                     if(connectedSockets.get(user)) {
                         io.to(connectedSockets.get(user)).emit('message', { chatId: data.chatId, message: data.message });
                     }

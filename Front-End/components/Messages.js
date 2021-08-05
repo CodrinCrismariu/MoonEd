@@ -18,7 +18,7 @@ export default Messages = ({ userData, chatId }) => {
             socket.emit('get id', userData.id);
         });
     }, [])
-  
+
     return (
       <GiftedChat
         messages={messages}
