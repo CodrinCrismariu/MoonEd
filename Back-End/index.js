@@ -134,10 +134,23 @@ app.post('/forgotPass', (req, res) => {
     res.send('forgot pass response');
 });
 
-const connectedSockets = new Map();
+const MultiMap = require('multimap');
+const connectedSockets = new MultiMap();
 const reverseSockets = new Map();
 
+const append = (currentMessages, messages) => {
+    if (!Array.isArray(messages)) {
+      messages = [messages]
+    }
+    return true
+      ? messages.concat(currentMessages)
+      : currentMessages.concat(messages)
+  }
+
+
 io.on('connection', socket => {
+
+    console.log('socket connected');
 
     socket.emit('get id');
     socket.on('get id', id => {
@@ -146,19 +159,31 @@ io.on('connection', socket => {
     })
 
     socket.on("disconnect", () => {
-        connectedSockets.delete(reverseSockets.get(socket.id));
-        reverseSockets.delete(socket.id);
+
+        console.log('socket disconnected');
+
+        const id = reverseSockets.get(socket.id);
+
+        connectedSockets.delete(id, socket.id);
+        reverseSockets.delete(socket.id, id);
     });
 
     socket.on('message', data => {
         ChatModel.findOne({ id: data.chatId }, (err, chat) => {
             if(!err) {
-                const users = chat.users;
-                users.forEach(user => {
-                    if(connectedSockets.get(user)) {
-                        io.to(connectedSockets.get(user)).emit('message', { chatId: data.chatId, message: data.message });
-                    }
-                });
+                if(chat){
+                    const users = chat.users;
+                    users.forEach(user => {
+                        if(connectedSockets.get(user)) {
+                            io.to(connectedSockets.get(user)).emit('message', { chatId: data.chatId, message: data.message });
+                            console.log('message emited');
+                        }
+                    });
+                    chat.messages = append(chat.messages, data.message);
+                    chat.save();
+                } else {
+                    console.log("can't find chat with id", data.chatId);
+                }
             } else {
                 console.error(err);
             }
