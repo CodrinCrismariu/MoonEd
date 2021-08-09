@@ -37,6 +37,8 @@ To run in production mode u only need to run the backend server with ```node ind
 Also you need to change all the ip-s and ports from Back-End/variable.js and Front-End/Variable.js
 so that they meet your requirements
 
+In the MongoDB server you need to create a database named MoonEd and the app will do the rest
+
 ### Tech
 - [Node.js](https://nodejs.org/en/) evented I/O for the backend
 - [Express] fast node.js network app framework
