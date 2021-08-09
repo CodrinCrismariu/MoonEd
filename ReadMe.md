@@ -20,7 +20,7 @@ npm install
 cd ..
 cd Front-End
 npm install
-cd..
+cd ..
 ```
 If u are using this for production u can also do
 ```sh
@@ -29,7 +29,7 @@ npm install --production
 cd ..
 cd Front-End 
 npm install --production
-cd..
+cd ..
 ```
 To run in development mode u can run ```npm run``` in the Back-End and Front-End folder 
 To run in production mode u only need to run the backend server with ```node index.js```
