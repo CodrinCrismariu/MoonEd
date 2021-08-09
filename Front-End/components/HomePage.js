@@ -1,4 +1,5 @@
 import React from 'react';
+import { ip, mainColor, secondColor, thirdColor } from '../Variable'; 
 import { StyleSheet, 
         Text,
         View, 
@@ -20,7 +21,7 @@ export default HomePage = (props) => {
 
         const ctx = canvas.getContext('2d');
         ctx.lineWidth = windowWidth / 1.3;
-        ctx.strokeStyle = "#BABABA";
+        ctx.strokeStyle = secondColor;
         animate(ctx);
     };
 
@@ -62,14 +63,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     button1: {
-        borderColor: '#BABABA',
+        borderColor: secondColor,
         borderWidth: 3,
         width: '55%',
         marginTop: '40%',
         alignItems: 'center',
     },
     button2: {
-        backgroundColor: '#BABABA',
+        backgroundColor: secondColor,
         width: '55%',
         marginTop: '10%',
         alignItems: 'center',
@@ -77,14 +78,14 @@ const styles = StyleSheet.create({
     text1: {
         fontSize: 16,
         padding: 13,
-        color: '#BABABA',
+        color: secondColor,
         fontFamily: 'Roboto',
         fontWeight: 'bold',
     },
     text2: {
         fontSize: 16,
         padding: 13,
-        color: '#272727',
+        color: mainColor,
         fontFamily: 'Roboto',
         fontWeight: 'bold',
     },

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ip, mainColor, secondColor, thirdColor } from '../Variable'; 
 import axios from 'react-native-axios';
 import { ScrollView,
         View, 
@@ -17,7 +18,7 @@ export default ForgotPass = (props) => {
     const [mail, setMail] = useState('');
 
     const sendMail = () => {
-        axios.post('http://192.168.1.189:3000/forgotPass', {
+        axios.post(ip + '/forgotPass', {
             mail: mail,
         })
         .then((res) => {
@@ -35,8 +36,8 @@ export default ForgotPass = (props) => {
             <Text style={styles.text}> Am uitat parola </Text>
             <TextInput style={styles.textinput}
                        placeholderTextColor={'#757575'} 
-                       placeholder="exemplu@gmail.com"
-                       keyboardType="default"
+                       placeholder='exemplu@gmail.com'
+                       keyboardType='default'
                        onChangeText={setMail}/>
 
             {res != '' ? 
@@ -59,7 +60,7 @@ export default ForgotPass = (props) => {
 
 const styles = StyleSheet.create({
     text: {
-        color: '#BABABA',
+        color: secondColor,
         fontFamily: 'Roboto',
         fontWeight: 'bold',
         fontSize: (windowWidth / 10),
@@ -69,12 +70,12 @@ const styles = StyleSheet.create({
     text2: {
         fontSize: (windowWidth / 20),
         padding: 13,
-        color: '#272727',
+        color: mainColor,
         fontFamily: 'Roboto',
         fontWeight: 'bold',
     },
     button2: {
-        backgroundColor: '#BABABA',
+        backgroundColor: secondColor,
         alignItems: 'center',
         justifyContent: 'center',
         marginLeft: (windowWidth / 100 * 5),
@@ -90,9 +91,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderWidth: 3,
         borderRadius: 3,
-        borderColor: '#BABABA',
+        borderColor: secondColor,
         padding: 20,
-        color: '#BABABA',
+        color: secondColor,
         fontFamily: 'Roboto',
         fontWeight: 'bold',
         fontSize: (windowWidth / 22),

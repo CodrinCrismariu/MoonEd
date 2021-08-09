@@ -5,7 +5,7 @@ import { StyleSheet,
         Text,
         TouchableOpacity,
         Button, } from 'react-native';
-        
+import { ip, mainColor, secondColor, thirdColor } from '../Variable'; 
 import OptionsIcon from '../imgs/OptionsIcon';
 import HumanIcon from '../imgs/HumanIcon';
 import XIcon from '../imgs/XIcon';
@@ -86,7 +86,7 @@ const StudentButtons = ({ setPage }) => {
                                        height={ windowWidth / 100 * 20 }
                                        marginLeft={ windowWidth / 100 * 7 }/>
                         <Text style={{ fontSize: windowWidth / 100 * 7,
-                                       color: '#BABABA',
+                                       color: secondColor,
                                        fontFamily: 'Roboto',
                                        fontWeight: 'bold',
                                        marginLeft: windowWidth / 100 * 5, }}>
@@ -106,7 +106,7 @@ const StudentButtons = ({ setPage }) => {
                                    height={ windowWidth / 100 * 20 }
                                    marginLeft={ windowWidth / 100 * 7 }/>
                         <Text style={{ fontSize: windowWidth / 100 * 7,
-                                       color: '#BABABA',
+                                       color: secondColor,
                                        fontFamily: 'Roboto',
                                        fontWeight: 'bold',
                                        marginLeft: windowWidth / 100 * 5, }}>
@@ -126,7 +126,7 @@ const StudentButtons = ({ setPage }) => {
                                      height={ windowWidth / 100 * 20 }
                                      marginLeft={ windowWidth / 100 * 7 }/>
                         <Text style={{ fontSize: windowWidth / 100 * 7,
-                                       color: '#BABABA',
+                                       color: secondColor,
                                        fontFamily: 'Roboto',
                                        fontWeight: 'bold',
                                        marginLeft: windowWidth / 100 * 5, }}>
@@ -145,7 +145,7 @@ const ProfileWindow = ({ setOpen, name, setLoggedIn, setPage, setUserData }) => 
             <View style={{ position:'absolute', 
                         width:windowWidth, 
                         height:windowHeight, 
-                        backgroundColor:'#272727' }}>
+                        backgroundColor:mainColor }}>
                 <View style={{ height: windowWidth / 100 * 30 }}>
                     <View style={{ flex: 1, flexDirection:'row'}}>
                         <View style={{ width:windowWidth / 100 * 83.5, justifyContent:'center', alignItems: 'center' }}>
@@ -179,14 +179,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: windowWidth,
         height: windowWidth / 100 * 30,
-        backgroundColor: '#272727',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 7,
-        },
-        shadowOpacity: 0.7,
-        shadowRadius: 9.51,
+        backgroundColor: mainColor,
         alignItems: 'center',
     },
     img: {
@@ -195,7 +188,7 @@ const styles = StyleSheet.create({
     text: {
         top: 10,
         fontSize: windowWidth / 100 * 8,
-        color: '#BABABA',
+        color: secondColor,
         fontFamily: 'Roboto',
         fontWeight: 'bold',
     },
@@ -205,7 +198,7 @@ const styles = StyleSheet.create({
     },
     window: {
         position: 'absolute',
-        backgroundColor: '#272727',
+        backgroundColor: mainColor,
         shadowColor: "#000",
         shadowOffset: {
             width: 7,

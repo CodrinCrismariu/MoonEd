@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { ip, socketIp, mainColor, secondColor, thirdColor } from '../Variable'; 
 import {
     View,
     StyleSheet,
-    BackHandler,
     Dimensions,
     ScrollView,
     Image,
@@ -23,7 +23,7 @@ export default Chat = (props) => {
     const [messages, setMessages] = useState();
 
     useEffect(() => {
-        axios.post('http://192.168.1.189:3000/getChats', {
+        axios.post(ip + '/getChats', {
             id: props.userData.id,
         })
             .then((res) => {
@@ -40,7 +40,7 @@ export default Chat = (props) => {
                 console.error(err)
             })
 
-        this.socket = io('http://192.168.1.189:8080');
+        this.socket = io(socketIp);
 
         this.socket.on('get id', () => {
             this.socket.emit('get id', props.userData.id);
@@ -81,7 +81,7 @@ export default Chat = (props) => {
     }
 
     return (
-        <View style={{ backgroundColor: '#202020', height: windowHeight }}>
+        <View style={{ backgroundColor: thirdColor, height: windowHeight }}>
             <View style={{ height: windowWidth / 100 * 30, width: windowWidth }} />
 
             <ScrollView style={{}}>
@@ -103,7 +103,7 @@ export default Chat = (props) => {
                     position: 'absolute',
                     width: windowWidth,
                     height: windowHeight,
-                    backgroundColor: '#272727'
+                    backgroundColor: mainColor
                 }}>
                     <View style={{ height: windowWidth / 100 * 30 }}>
                         <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -183,14 +183,15 @@ const styles = StyleSheet.create({
         marginLeft: windowWidth / 100 * 2.5,
     },
     bigText: {
-        color: '#BABABA',
+        color: secondColor,
         fontFamily: 'Roboto',
         fontWeight: 'bold',
         fontSize: windowWidth / 100 * 6,
         marginBottom: windowWidth / 100 * 2.5,
     },
     messageText: {
-        color: '#666666',
+        color: secondColor,
+        opacity: 0.5,
         fontFamily: 'Roboto',
         fontWeight: 'bold',
         fontSize: windowWidth / 100 * 5,
@@ -198,7 +199,7 @@ const styles = StyleSheet.create({
     text: {
         top: 10,
         fontSize: windowWidth / 100 * 8,
-        color: '#BABABA',
+        color: secondColor,
         fontFamily: 'Roboto',
         fontWeight: 'bold',
     },

@@ -1,4 +1,5 @@
 import React from 'react'
+import { ip, mainColor, secondColor, thirdColor } from '../Variable'; 
 import Svg, { Path } from 'react-native-svg'
 
 export default OptionsIcon = (props) => {
@@ -13,7 +14,7 @@ export default OptionsIcon = (props) => {
         >
             <Path
                 d='M0 2a2 2 0 012-2h21a2 2 0 110 4H2a2 2 0 01-2-2zM0 18a2 2 0 012-2h21a2 2 0 110 4H2a2 2 0 01-2-2zM0 10a2 2 0 012-2h21a2 2 0 110 4H2a2 2 0 01-2-2z'
-                fill='#BABABA'
+                fill={secondColor}
             />
         </Svg>
     )

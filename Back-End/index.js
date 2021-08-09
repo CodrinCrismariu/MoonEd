@@ -1,7 +1,8 @@
+const variable = require('./variable');
 const express = require('express');
 const app = express();
-const port = 3000;
-const io = require('socket.io')(8080);
+const port = variable.serverPort;
+const io = require('socket.io')(variable.socketPort);
 const connection = require('./model');
 const mongoose = require('mongoose');
 const UserModel = mongoose.model('User');
@@ -67,6 +68,22 @@ app.post('/retrieveUserData', (req, res) => {
         if(!err) {
             if(user) {
                 res.send({ name: user.name.split(' '), type: user.type, id: user.id })
+            }
+        } else {
+            console.error(err);
+        }
+    });
+});
+
+app.post('/getGrades', (req, res) => {
+    UserModel.findOne({ id: req.body.id }, (err, user) => {
+        if(!err) {
+            if(user) {
+                if (!Array.isArray(user.grades))
+                    user.grades = [user.grades];
+                res.send(user.grades);
+            } else {
+                console.error("can't find user with id", req.body.id);
             }
         } else {
             console.error(err);
@@ -142,10 +159,8 @@ const append = (currentMessages, messages) => {
     if (!Array.isArray(messages)) {
       messages = [messages]
     }
-    return true
-      ? messages.concat(currentMessages)
-      : currentMessages.concat(messages)
-  }
+    return messages.concat(currentMessages);
+}
 
 
 io.on('connection', socket => {

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'react-native-axios';
+import { ip, mainColor, secondColor, thirdColor } from '../Variable'; 
 import { ScrollView,
         View, 
         StyleSheet, 
@@ -37,7 +38,7 @@ export default Register = (props) => {
             setRes('parola trebuie sa aiba cel putin 8 caractere');
             return;
         }
-        axios.post('http://192.168.1.189:3000/register', {
+        axios.post(ip + '/register', {
             mail: mail,
             pass: pass,
             id: key,
@@ -102,7 +103,7 @@ export default Register = (props) => {
 
 const styles = StyleSheet.create({
     text: {
-        color: '#BABABA',
+        color: secondColor,
         fontFamily: 'Roboto',
         fontWeight: 'bold',
         fontSize: (windowWidth / 10),
@@ -112,12 +113,12 @@ const styles = StyleSheet.create({
     text2: {
         fontSize: (windowWidth / 20),
         padding: 13,
-        color: '#272727',
+        color: mainColor,
         fontFamily: 'Roboto',
         fontWeight: 'bold',
     },
     button2: {
-        backgroundColor: '#BABABA',
+        backgroundColor: secondColor,
         alignItems: 'center',
         justifyContent: 'center',
         marginLeft: (windowWidth / 100 * 5),
@@ -133,9 +134,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderWidth: 3,
         borderRadius: 3,
-        borderColor: '#BABABA',
+        borderColor: secondColor,
         padding: 20,
-        color: '#BABABA',
+        color: secondColor,
         fontFamily: 'Roboto',
         fontWeight: 'bold',
         fontSize: (windowWidth / 22),

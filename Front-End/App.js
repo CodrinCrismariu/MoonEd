@@ -4,6 +4,7 @@ import { NativeRouter, Route, Redirect } from 'react-router-native';
 import { StatusBar } from 'expo-status-bar';
 import axios from 'react-native-axios';
 import * as SecureStore from 'expo-secure-store';
+import { ip, mainColor, secondColor, thirdColor } from './Variable'; 
 
 import HomePage from './components/HomePage';
 import LogIn from './components/LogIn';
@@ -11,32 +12,43 @@ import Register from './components/Register';
 import ForgotPass from './components/ForgotPass';
 import News from './components/News';
 import Chats from './components/Chats';
+import Grades from './components/Grades';
 
 export default App = () => {
+  const routes = [
+    { path: '', Component: HomePage },
+    { path: 'login', Component: LogIn },
+    { path: 'register', Component: Register },
+    { path: 'forgotPass', Component: ForgotPass },
+    { path: 'news', Component: News },
+    { path: 'messages', Component: Chats },
+    { path: 'grades', Component: Grades }
+  ];
 
   const [loggedIn, setLoggedIn] = useState(0);
   const [userData, setUserData] = useState({});
   const [page, setPage] = useState('');
 
   const getUserData = () => {
-    axios.post('http://192.168.1.189:3000/retrieveUserData', {
-      mail: userData.mail
-    })
+    axios
+      .post(ip + '/retrieveUserData', {
+        mail: userData.mail,
+      })
       .then((res) => {
         setUserData({ ...userData, ...res.data });
       })
       .catch((err) => {
-        console.error(err)
-      })
-  }
+        console.error(err);
+      });
+  };
 
   const getValueForMail = async () => {
     setUserData({ ...userData, mail: await SecureStore.getItemAsync('mail') });
-  }
+  };
 
   const getValueForPass = async () => {
     setUserData({ ...userData, pass: await SecureStore.getItemAsync('pass') });
-  }
+  };
 
   useEffect(() => {
     getValueForMail();
@@ -47,10 +59,11 @@ export default App = () => {
       getValueForPass();
     }
     if (userData.mail && userData.pass && loggedIn == 0) {
-      axios.post('http://192.168.1.189:3000/login', {
-        mail: userData.mail,
-        pass: userData.pass,
-      })
+      axios
+        .post(ip + '/login', {
+          mail: userData.mail,
+          pass: userData.pass,
+        })
         .then((res) => {
           if (res.data == 'succes') {
             // retrieve userData
@@ -62,30 +75,39 @@ export default App = () => {
         })
         .catch((err) => {
           console.error(err);
-        })
+        });
     }
   });
   return (
     <NativeRouter>
-
       <Redirect to={'/' + page} />
       <View style={styles.container}>
-        <StatusBar style="light" />
-        <Route exact path='/' component={() => <HomePage setPage={setPage} />} />
-        <Route path='/login' component={() => <LogIn setPage={setPage} getUserData={getUserData} setUserData={setUserData} />} />
-        <Route path='/register' component={() => <Register setPage={setPage} getUserData={getUserData} setUserData={setUserData} />} />
-        <Route path='/forgotPass' component={() => <ForgotPass setPage={setPage} />} />
-        <Route exact path='/news' component={() => <News setPage={setPage} setUserData={setUserData} userData={userData} setLoggedIn={setLoggedIn} />} />
-        <Route path='/messages' component={() => <Chats setPage={setPage} setUserData={setUserData} userData={userData} setLoggedIn={setLoggedIn} />} />
-      </View>
+        <StatusBar style='light' />
 
+        {routes.map(({ path, Component }) => (
+          <Route
+            exact
+            path={'/' + path}
+            key={path}
+            component={() => (
+              <Component
+                setPage={setPage}
+                getUserData={getUserData}
+                setUserData={setUserData}
+                userData={userData}
+                setLoggedIn={setLoggedIn}
+              />
+            )}
+          />
+        ))}
+      </View>
     </NativeRouter>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#272727',
+    backgroundColor: mainColor,
   },
 });

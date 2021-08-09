@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import { ip, mainColor, secondColor, thirdColor } from '../Variable'; 
 import NavBar from './NavBar';
 
 export default News = (props) => {
@@ -17,6 +18,6 @@ export default News = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#272727',
+    backgroundColor: mainColor,
   },
 });
