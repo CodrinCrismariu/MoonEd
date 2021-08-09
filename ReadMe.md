@@ -41,9 +41,9 @@ In the MongoDB server you need to create a database named MoonEd and the app wil
 
 ### Tech
 - [Node.js](https://nodejs.org/en/) evented I/O for the backend
-- [Express] fast node.js network app framework
+- [Express](http://expressjs.com/) fast node.js network app framework
 - [ReactNative](https://reactnative.dev/) for cross-platform front-end
-- Socket.io for real-time, bidirectional and event-based communication
+- [Socket.io](https://socket.io/) for real-time, bidirectional and event-based communication
 - [Mongoose](https://mongoosejs.com/) elegant mongodb object modeling for node.js
 - [Axios](https://axios-http.com/docs/intro) Promise based HTTP client for the browser and node.js
 - [Expo](https://expo.dev/) to develop react-native apps on phones
